@@ -1,0 +1,24 @@
+clear
+echo "----------Hardware Information------------"
+dmesg | grep DMI | head -n 1 | awk -F "]" '{print $2}'
+echo ""
+echo "----------OS Information------------"
+hostnamectl | grep "Static hostname:"
+hostnamectl | tail -n 3
+echo ""
+echo "----------Memory Information------------"
+cat /proc/meminfo | grep MemTotal
+echo ""
+echo "----------CPU Information------------"
+echo -n "Number of core(s): "
+cat /proc/cpuinfo | grep "processor" | wc -l
+cat /proc/cpuinfo | grep "model name" | head -n 1
+echo ""
+echo "----------Disk Information------------"
+echo -n "Total Size: "
+df -h --total | tail -n 1| awk '{print $2}'
+echo -n "Used: "
+df -h --total | tail -n 1| awk '{print $3}'
+echo -n "Available: "
+df -h --total | tail -n 1| awk '{print $4}'
+echo ""
